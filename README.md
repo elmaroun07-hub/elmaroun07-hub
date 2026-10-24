@@ -20,7 +20,7 @@ mastra is a TypeScript AI agent framework.
 #25237: I reported, with a failing-test reproduction, that experiment trajectory scorers received an empty trajectory for workflow targets. It was fixed upstream in #25269.
 Own work
 
-Voltura models solar and battery savings from NASA POWER irradiance and grid carbon-intensity data. It is live at voltura-web.onrender.com, and the code is private. The bug that shaped how I work: NASA keys were built as 2022JAN while the real keys are 202201, so every lookup missed. A || 4.0 fallback then gave Fuengirola and Tétouan the same 4,203 kWh, while the response still named NASA POWER as the source. The fix removed a 13.5% overstatement. Write-up
+Voltura screens Spain’s housing for summer heat risk. In Córdoba it scores 32,431 residential buildings from public records (the land registry, 81,972 energy certificates, the 2021 census and terrain data), each score with an uncertainty band and its sources: voltura-web.onrender.com/cribado. It also models solar and battery savings from NASA POWER irradiance. The production repo is private; voltura-proof holds three of its test suites with the code they run, and they run with no database, network or keys.
 
 tokenguard audits LLM prompt spend with real BPE tokenizers. It is MIT-licensed and on npm as @houssain/tokenguard.
 
