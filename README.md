@@ -20,8 +20,7 @@ mastra is a TypeScript AI agent framework.
 #25237: I reported, with a failing-test reproduction, that experiment trajectory scorers received an empty trajectory for workflow targets. It was fixed upstream in #25269.
 Own work
 
-Voltura screens Spain’s housing for summer heat risk. In Córdoba it scores 32,431 residential buildings from public records (the land registry, 81,972 energy certificates, the 2021 census and terrain data), each score with an uncertainty band and its sources: voltura-web.onrender.com/cribado. It also models solar and battery savings from NASA POWER irradiance. The production repo is private; voltura-proof holds three of its test suites with the code they run, and they run with no database, network or keys.
-
+Voltura screens Spain's housing for summer heat risk. In Córdoba it scores 32,431 residential buildings from public records (the land registry, 81,972 energy certificates, the 2021 census and terrain data), each score with an uncertainty band and its sources: voltura-web.onrender.com/cribado. It also models solar and battery savings from NASA POWER irradiance. The production repo is private; [voltura-proof](https://github.com/elmaroun07-hub/voltura-proof) holds three of its test suites with the code they run, and they run with no database, network or keys.
 tokenguard audits LLM prompt spend with real BPE tokenizers. It is MIT-licensed and on npm as @houssain/tokenguard.
 
 Open to
