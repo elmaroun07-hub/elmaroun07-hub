@@ -2,7 +2,7 @@
 
 I find where software silently invents a number: an error turned into a zero, or a fallback that passes every test while the output still names a real source. Next, I want to find where AI models do the same.
 
-Software testing · Tétouan, Morocco · [LinkedIn](https://www.linkedin.com/in/houssain-elmarouni)
+Software testing · Contributor, [career-ops-hq](https://github.com/career-ops-hq) · Tétouan, Morocco · [LinkedIn](https://www.linkedin.com/in/houssain-elmarouni)
 
 ## Merged upstream
 
