@@ -10,6 +10,9 @@ Software testing · Tétouan, Morocco · [LinkedIn](https://www.linkedin.com/in/
 
 - [#4504](https://github.com/career-ops-hq/career-ops/pull/4504) (merged): Gemini API errors used to end the Hacker News scan as "New offers: 0" with exit code 0. The scan now counts and prints the errors and exits 1 when every call fails. The PR includes a scan-level regression test.
 - [#4416](https://github.com/career-ops-hq/career-ops/issues/4416) → [#4441](https://github.com/career-ops-hq/career-ops/pull/4441) (merged): I proposed that a portal is recorded as an empty board only if a request actually succeeded. Anything else is now recorded as unverified_zero. While reviewing #4441, I found that the audit's page cap never reached the providers, and the PR adopted my one-line fix.
+- - [#5809](https://github.com/career-ops-hq/career-ops/issues/5809) → [#5817](https://github.com/career-ops-hq/career-ops/pull/5817) (merged): I measured the OpenRouter runner marking job postings done without reading a job description, and free models answering with tool calls instead of scores. My fix tells the model it has no tools and strips the steps it can't run, with a test that fails if any comes back.
+- [#6017](https://github.com/career-ops-hq/career-ops/pull/6017) (merged): each model got 15 s, a limit set when the prompt was a third of its current size, and one timeout blacklisted the model for good. Now 120 s.
+- [#6018](https://github.com/career-ops-hq/career-ops/pull/6018) (merged): the CV test image ignored a failed package-index download and later failed with a misleading "unable to locate package". It now retries and fails on the real error.
 
 **[career-ops-docs](https://github.com/career-ops-hq/career-ops-docs)**
 
