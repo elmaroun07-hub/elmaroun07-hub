@@ -1,35 +1,57 @@
-# Houssain El Marouni
+# Houssain El Marouni | Elmaroun Hub
 
-I find where software silently invents a number: an error turned into a zero, or a fallback that passes every test while the output still names a real source. Next, I want to find where AI models do the same.
+**AI reliability · Software testing · Reproducible evaluation**
 
-Software testing · Contributor, [career-ops-hq](https://github.com/career-ops-hq) · Tétouan, Morocco · [LinkedIn](https://www.linkedin.com/in/houssain-elmarouni)
+I'm an independent developer in Tétouan, Morocco. I investigate silent failures: API errors reported as zero results, missing inputs replaced by plausible numbers, and AI answers that go beyond the evidence a tool returned.
 
-## Merged upstream
+I build reproductions, regression tests and fixes that make those failures visible.
 
-**[career-ops](https://github.com/career-ops-hq/career-ops)** is an open-source job scanner with 70k+ stars.
+[LinkedIn](https://www.linkedin.com/in/houssain-elmarouni) · [Voltura live](https://voltura-web.onrender.com/cribado) · [Merged Career-ops PRs](https://github.com/career-ops-hq/career-ops/pulls?q=is%3Apr+is%3Amerged+author%3Aelmaroun07-hub)
 
-- [#4504](https://github.com/career-ops-hq/career-ops/pull/4504) (merged): Gemini API errors used to end the Hacker News scan as "New offers: 0" with exit code 0. The scan now counts and prints the errors and exits 1 when every call fails. The PR includes a scan-level regression test.
-- [#4416](https://github.com/career-ops-hq/career-ops/issues/4416) → [#4441](https://github.com/career-ops-hq/career-ops/pull/4441) (merged): I proposed that a portal is recorded as an empty board only if a request actually succeeded. Anything else is now recorded as unverified_zero. While reviewing #4441, I found that the audit's page cap never reached the providers, and the PR adopted my one-line fix.
-- [#5809](https://github.com/career-ops-hq/career-ops/issues/5809) → [#5817](https://github.com/career-ops-hq/career-ops/pull/5817) and [#6169](https://github.com/career-ops-hq/career-ops/pull/6169) (both merged, issue closed): I measured the OpenRouter runner marking job postings done without reading a job description, and free models answering with tool calls instead of scores. #5817 tells the model it has no tools and strips the steps it can't run, with a test that fails if any comes back. #6169 replaces a fixed 2 s page wait that left all 20 Workday postings I tested unreadable: the runner now tries the job board's API first, then waits up to 15 s for the description itself.
-- [#6017](https://github.com/career-ops-hq/career-ops/pull/6017) (merged): each model got 15 s, a limit set when the prompt was a third of its current size, and one timeout blacklisted the model for good. Now 120 s.
-- [#6018](https://github.com/career-ops-hq/career-ops/pull/6018) (merged): the CV test image ignored a failed package-index download and later failed with a misleading "unable to locate package". It now retries and fails on the real error.
+## Featured work
 
-**[career-ops-docs](https://github.com/career-ops-hq/career-ops-docs)**
+| Project | What it does | Evidence and status |
+| --- | --- | --- |
+| [Reported or Invented?](https://github.com/elmaroun07-hub/reported-or-invented) | Tests whether AI agents report silent tool failures, accept corrupted data, or invent unsupported values. | HTTP failure injection, a deterministic mock API, a crewAI runner and a rule-based judge. Early prototype; the full experiment has not run yet. |
+| [Voltura](https://github.com/elmaroun07-hub/Voltura) | Screens housing for summer heat risk and estimates solar and battery savings with explicit data provenance. | Live application; Córdoba screening covers 32,431 residential buildings. Public code, tests, methodology and recorded verification evidence. |
+| [voltura-proof](https://github.com/elmaroun07-hub/voltura-proof) | A standalone copy of selected Voltura code and tests for inspection and reproduction. | Three suites covering the heat-risk index, Spanish building-code calculations and NASA POWER regressions. Runs without an external service, database or API keys. |
 
-- [#89](https://github.com/career-ops-hq/career-ops-docs/pull/89) (merged): the scan guide, in English, Spanish, French and German, now sends readers to the unverified-zero warning before they blame the title filter.
+### Current evaluation work
 
-**[mastra](https://github.com/mastra-ai/mastra)** is a TypeScript AI agent framework.
+Reported or Invented? separates **accepting corrupted tool data** from **inventing values the tool never returned**. It includes genuine empty-data and explicit-error controls.
 
-- [#25237](https://github.com/mastra-ai/mastra/issues/25237): I reported, with a failing-test reproduction, that experiment trajectory scorers received an empty trajectory for workflow targets. It was fixed upstream in [#25269](https://github.com/mastra-ai/mastra/pull/25269).
+The repository contains 23 judge tests, including nine recorded model responses. These are initial examples, not a completed benchmark. Next steps are validating the judge, running repeated experiments and publishing reproducible results.
 
-## Own work
+## Merged upstream contributions
 
-**[Voltura](https://voltura-web.onrender.com/cribado)** screens Spain's housing for summer heat risk. In Córdoba it scores 32,431 residential buildings from public records (the land registry, 81,972 energy certificates, the 2021 census and terrain data), each score with an uncertainty band and its sources. It also models solar and battery savings from NASA POWER irradiance. The full code is public at [elmaroun07-hub/Voltura](https://github.com/elmaroun07-hub/Voltura) (MIT). [voltura-proof](https://github.com/elmaroun07-hub/voltura-proof) holds three of its test suites with the code they run, and they run with no database, network or keys.
+Five authored fixes merged into [Career-ops](https://github.com/career-ops-hq/career-ops):
 
-The bug that shaped how I work: NASA keys were built as `2022JAN` while the real keys are `202201`, so every lookup missed. A `|| 4.0` fallback then gave Fuengirola and Tétouan the same 4,203 kWh, while the response still named NASA POWER as the source. The fix removed a 13.5% overstatement.
+| PR | Problem addressed |
+| --- | --- |
+| [#4504](https://github.com/career-ops-hq/career-ops/pull/4504) | Gemini API failures appeared as “New offers: 0” with a successful exit. The scanner now reports failures and exits non-zero when every call fails, with a scan-level regression test. |
+| [#5817](https://github.com/career-ops-hq/career-ops/pull/5817) | The OpenRouter runner instructed models to use tools it did not provide. Its prompt now states the limitation and removes unavailable steps, with regression coverage. |
+| [#6169](https://github.com/career-ops-hq/career-ops/pull/6169) | A fixed two-second wait missed delayed job descriptions. The runner now tries supported job-board APIs first, then waits for page content. |
+| [#6017](https://github.com/career-ops-hq/career-ops/pull/6017) | Slow model responses exceeded a 15-second deadline. The timeout was raised to 120 seconds. |
+| [#6018](https://github.com/career-ops-hq/career-ops/pull/6018) | A failed package-index download caused a misleading missing-package error. The CV test image now retries and fails on the underlying fetch error. |
 
-**[tokenguard](https://github.com/elmaroun07-hub/tokenguard)** audits LLM prompt spend with real BPE tokenizers. It is MIT-licensed and on npm as [@houssain/tokenguard](https://www.npmjs.com/package/@houssain/tokenguard).
+Other contributions:
+
+- **Career-ops:** [issue #4416](https://github.com/career-ops-hq/career-ops/issues/4416) proposed distinguishing unverified zero results from successful empty responses; implemented upstream in [PR #4441](https://github.com/career-ops-hq/career-ops/pull/4441). During review, I also identified a page-cap forwarding bug and contributed the one-line fix.
+- **Career-ops documentation:** [PR #89](https://github.com/career-ops-hq/career-ops-docs/pull/89), merged, directs readers to check unverified-zero warnings before changing job-title filters.
+- **Mastra:** [issue #25237](https://github.com/mastra-ai/mastra/issues/25237) reported an empty trajectory reaching workflow experiment scorers, with a failing-test reproduction. The upstream fix merged in [PR #25269](https://github.com/mastra-ai/mastra/pull/25269).
+
+## The bug that shaped my work
+
+Voltura looked up NASA POWER data with keys such as `2022JAN`, while the response used `202201`. Every lookup missed. A `|| 4.0` fallback then gave Fuengirola and Tétouan the same 4,203 kWh annual estimate while still naming NASA as the source.
+
+That failure shaped my approach: make missing evidence visible, trace numbers to their inputs, and keep a regression test that catches the original defect.
+
+## More work
+
+[tokenguard](https://github.com/elmaroun07-hub/tokenguard) audits LLM prompt spend with real BPE tokenizers. MIT-licensed; available on npm as [@houssain/tokenguard](https://www.npmjs.com/package/@houssain/tokenguard).
 
 ## Open to
 
-Software testing engagements · AI safety research fellowships · full-time roles
+Software testing engagements · AI reliability and evaluation collaborations · AI safety research fellowships · Full-time roles
+
+For Reported or Invented?, feedback on the judge's classification rules and independent reproductions would be especially useful. [Connect on LinkedIn](https://www.linkedin.com/in/houssain-elmarouni).
