@@ -12,7 +12,7 @@ I build reproductions, regression tests and fixes that make those failures visib
 
 | Project | What it does | Evidence and status |
 | --- | --- | --- |
-| [Reported or Invented?](https://github.com/elmaroun07-hub/reported-or-invented) | Tests whether AI agents report silent tool failures, accept corrupted data, or invent unsupported values. | HTTP failure injection, a deterministic mock API, a crewAI runner and a rule-based judge. Early prototype; the full experiment has not run yet. |
+| [Reported or Invented?](https://github.com/elmaroun07-hub/reported-or-invented) | Tests whether AI agents report silent tool failures, accept corrupted data, or invent unsupported values. | HTTP failure injection, a deterministic mock API, a crewAI runner and a rule-based judge. Published results for gpt-oss-20b and Gemini 3.5 Flash-Lite; every label checked against the full answer (AI-assisted). |
 | [Voltura](https://github.com/elmaroun07-hub/Voltura) | Screens housing for summer heat risk and estimates solar and battery savings with explicit data provenance. | Live application; Córdoba screening covers 32,431 residential buildings. Public code, tests, methodology and recorded verification evidence. |
 | [voltura-proof](https://github.com/elmaroun07-hub/voltura-proof) | A standalone copy of selected Voltura code and tests for inspection and reproduction. | Three suites covering the heat-risk index, Spanish building-code calculations and NASA POWER regressions. Runs without an external service, database or API keys. |
 
@@ -20,7 +20,7 @@ I build reproductions, regression tests and fixes that make those failures visib
 
 Reported or Invented? separates **accepting corrupted tool data** from **inventing values the tool never returned**. It includes genuine empty-data and explicit-error controls.
 
-The repository contains 23 judge tests, including nine recorded model responses. These are initial examples, not a completed benchmark. Next steps are validating the judge, running repeated experiments and publishing reproducible results.
+Two 84-run results are published (crewAI, temperature 0, every label checked against the full answer, AI-assisted). When a tool failed silently in a way that changed the facts asked for, gpt-oss-20b passed the bad data on as fact in 38 of 48 runs (79%) and Gemini 3.5 Flash-Lite in 44 of 48 (92%). Both answered 12 of 12 real-data runs correctly. Two models and one framework: a measurement, not a general claim. The judge has 43 tests.
 
 ## Merged upstream contributions
 
@@ -30,15 +30,16 @@ Five authored fixes merged into [Career-ops](https://github.com/career-ops-hq/ca
 | --- | --- |
 | [#4504](https://github.com/career-ops-hq/career-ops/pull/4504) | Gemini API failures appeared as “New offers: 0” with a successful exit. The scanner now reports failures and exits non-zero when every call fails, with a scan-level regression test. |
 | [#5817](https://github.com/career-ops-hq/career-ops/pull/5817) | The OpenRouter runner instructed models to use tools it did not provide. Its prompt now states the limitation and removes unavailable steps, with regression coverage. |
-| [#6169](https://github.com/career-ops-hq/career-ops/pull/6169) | A fixed two-second wait missed delayed job descriptions. The runner now tries supported job-board APIs first, then waits for page content. |
+| [#6169](https://github.com/career-ops-hq/career-ops/pull/6169) | A fixed two-second wait missed delayed job descriptions. The runner now tries supported job-board APIs first, then waits for page content. Released in v1.40.0. |
 | [#6017](https://github.com/career-ops-hq/career-ops/pull/6017) | Slow model responses exceeded a 15-second deadline. The timeout was raised to 120 seconds. |
 | [#6018](https://github.com/career-ops-hq/career-ops/pull/6018) | A failed package-index download caused a misleading missing-package error. The CV test image now retries and fails on the underlying fetch error. |
 
 Other contributions:
 
-- **Career-ops:** [issue #4416](https://github.com/career-ops-hq/career-ops/issues/4416) proposed distinguishing unverified zero results from successful empty responses; implemented upstream in [PR #4441](https://github.com/career-ops-hq/career-ops/pull/4441). During review, I also identified a page-cap forwarding bug and contributed the one-line fix.
+- **Career-ops:** [issue #4416](https://github.com/career-ops-hq/career-ops/issues/4416) proposed distinguishing unverified zero results from successful empty responses; implemented upstream in [PR #4441](https://github.com/career-ops-hq/career-ops/pull/4441). During review, I also identified a page-cap forwarding bug and proposed the one-line fix, which was merged as written.
 - **Career-ops documentation:** [PR #89](https://github.com/career-ops-hq/career-ops-docs/pull/89), merged, directs readers to check unverified-zero warnings before changing job-title filters.
 - **Mastra:** [issue #25237](https://github.com/mastra-ai/mastra/issues/25237) reported an empty trajectory reaching workflow experiment scorers, with a failing-test reproduction. The upstream fix merged in [PR #25269](https://github.com/mastra-ai/mastra/pull/25269).
+- **Google ADK:** [PR #8097](https://github.com/google/adk-python/pull/8097) (open, awaiting review) makes `RestApiTool` tell the model when a 2xx response body is empty or not JSON, instead of passing it on with no failure marker.
 
 ## The bug that shaped my work
 
